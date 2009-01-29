@@ -5,7 +5,16 @@ describe Sunlight::Legislator do
   before(:each) do
 
     Sunlight::SunlightObject.api_key = 'the_api_key'
-    @example_hash = {"webform"=>"https://forms.house.gov/wyr/welcome.shtml", "title"=>"Rep", "nickname"=>"", "eventful_id"=>"P0-001-000016482-0", "district"=>"4", "congresspedia_url"=>"http://www.sourcewatch.org/index.php?title=Carolyn_McCarthy", "fec_id"=>"H6NY04112", "middlename"=>"", "gender"=>"F", "congress_office"=>"106 Cannon House Office Building", "lastname"=>"McCarthy", "crp_id"=>"N00001148", "bioguide_id"=>"M000309", "name_suffix"=>"", "phone"=>"202-225-5516", "firstname"=>"Carolyn", "govtrack_id"=>"400257", "fax"=>"202-225-5758", "website"=>"http://carolynmccarthy.house.gov/", "votesmart_id"=>"693", "sunlight_old_id"=>"fakeopenID252", "party"=>"D", "email"=>"", "state"=>"NY"}
+    @example_hash = { "webform"=>"https://forms.house.gov/wyr/welcome.shtml", 
+      "title"=>"Rep", "nickname"=>"", "eventful_id"=>"P0-001-000016482-0", "district"=>"4", 
+      "congresspedia_url"=>"http://www.sourcewatch.org/index.php?title=Carolyn_McCarthy", 
+      "fec_id"=>"H6NY04112", "middlename"=>"", "gender"=>"F", 
+      "congress_office"=>"106 Cannon House Office Building", "lastname"=>"McCarthy", 
+      "crp_id"=>"N00001148", "bioguide_id"=>"M000309", "name_suffix"=>"", "phone"=>"202-225-5516", 
+      "firstname"=>"Carolyn", "govtrack_id"=>"400257", "fax"=>"202-225-5758", 
+      "website"=>"http://carolynmccarthy.house.gov/", "votesmart_id"=>"693", 
+      "sunlight_old_id"=>"fakeopenID252", "party"=>"D", "email"=>"", "state"=>"NY", 
+      "youtube_url" => "http://youtube.com/sunlight", "twitter_id" => "sunlightlabsapi"}
     @jan = Sunlight::Legislator.new({"firstname" => "Jan", "district" => "Senior Seat", "title" => "Sen"})  
     @bob = Sunlight::Legislator.new({"firstname" => "Bob", "district" => "Junior Seat", "title" => "Sen"})
     @tom = Sunlight::Legislator.new({"firstname" => "Tom", "district" => "4", "title" => "Rep"})
@@ -17,6 +26,8 @@ describe Sunlight::Legislator do
       carolyn = Sunlight::Legislator.new(@example_hash)
       carolyn.should be_an_instance_of( Sunlight::Legislator )
       carolyn.firstname.should eql( "Carolyn")
+      carolyn.youtube_url.should eql( "http://youtube.com/sunlight")
+      carolyn.twitter_id.should eql( "sunlightlabsapi")
     end
   end
   
