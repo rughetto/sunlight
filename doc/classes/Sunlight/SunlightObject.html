@@ -55,8 +55,8 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../files/lib/sunlight_rb.html">
-                lib/sunlight.rb
+                <a href="../../files/lib/sunlight/sunlight_object_rb.html">
+                lib/sunlight/sunlight_object.rb
                 </a>
         <br />
             </td>
@@ -93,9 +93,15 @@ href="../Sunlight.html">Sunlight</a> and Google Maps APIs
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000001">construct_url</a>&nbsp;&nbsp;
-      <a href="#M000003">get_json_data</a>&nbsp;&nbsp;
-      <a href="#M000002">hash2get</a>&nbsp;&nbsp;
+      <a href="#M000002">api_format</a>&nbsp;&nbsp;
+      <a href="#M000003">api_key</a>&nbsp;&nbsp;
+      <a href="#M000004">api_key=</a>&nbsp;&nbsp;
+      <a href="#M000001">api_url</a>&nbsp;&nbsp;
+      <a href="#M000006">app_root</a>&nbsp;&nbsp;
+      <a href="#M000007">construct_url</a>&nbsp;&nbsp;
+      <a href="#M000009">get_json_data</a>&nbsp;&nbsp;
+      <a href="#M000005">get_key</a>&nbsp;&nbsp;
+      <a href="#M000008">hash2get</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -117,26 +123,23 @@ href="../Sunlight.html">Sunlight</a> and Google Maps APIs
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000001" class="method-detail">
-        <a name="M000001"></a>
+      <div id="method-M000002" class="method-detail">
+        <a name="M000002"></a>
 
         <div class="method-heading">
-          <a href="#M000001" class="method-signature">
-          <span class="method-name">construct_url</span><span class="method-args">(api_method, params)</span>
+          <a href="#M000002" class="method-signature">
+          <span class="method-name">api_format</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
-          <p>
-Constructs a <a href="../Sunlight.html">Sunlight</a> API-friendly URL
-</p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000001-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000001-source">
+            onclick="toggleCode('M000002-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000002-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sunlight.rb, line 18</span>
-    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">construct_url</span>(<span class="ruby-identifier">api_method</span>, <span class="ruby-identifier">params</span>)
-      <span class="ruby-node">&quot;#{API_URL}#{api_method}.#{API_FORMAT}?apikey=#{Sunlight.api_key}#{hash2get(params)}&quot;</span>
+<span class="ruby-comment cmt"># File lib/sunlight/sunlight_object.rb, line 8</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">api_format</span>
+      <span class="ruby-value str">&quot;json&quot;</span>
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -148,6 +151,124 @@ Constructs a <a href="../Sunlight.html">Sunlight</a> API-friendly URL
 
         <div class="method-heading">
           <a href="#M000003" class="method-signature">
+          <span class="method-name">api_key</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000003-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000003-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sunlight/sunlight_object.rb, line 12</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">api_key</span>
+      <span class="ruby-ivar">@api_key</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">get_key</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000004" class="method-detail">
+        <a name="M000004"></a>
+
+        <div class="method-heading">
+          <a href="#M000004" class="method-signature">
+          <span class="method-name">api_key=</span><span class="method-args">(key)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000004-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000004-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sunlight/sunlight_object.rb, line 16</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">api_key=</span>(<span class="ruby-identifier">key</span>)
+      <span class="ruby-ivar">@api_key</span> = <span class="ruby-identifier">key</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000001" class="method-detail">
+        <a name="M000001"></a>
+
+        <div class="method-heading">
+          <a href="#M000001" class="method-signature">
+          <span class="method-name">api_url</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000001-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000001-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sunlight/sunlight_object.rb, line 4</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">api_url</span> 
+      <span class="ruby-value str">&quot;http://services.sunlightlabs.com/api/&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
+
+        <div class="method-heading">
+          <a href="#M000006" class="method-signature">
+          <span class="method-name">app_root</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000006-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000006-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sunlight/sunlight_object.rb, line 28</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">app_root</span>
+      <span class="ruby-keyword kw">defined?</span>(<span class="ruby-constant">RAILS_ROOT</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">RAILS_ROOT</span> <span class="ruby-operator">:</span> <span class="ruby-constant">Merb</span>.<span class="ruby-identifier">root</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+          <a href="#M000007" class="method-signature">
+          <span class="method-name">construct_url</span><span class="method-args">(api_method, params)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Constructs a <a href="../Sunlight.html">Sunlight</a> API-friendly URL
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000007-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000007-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sunlight/sunlight_object.rb, line 33</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">construct_url</span>(<span class="ruby-identifier">api_method</span>, <span class="ruby-identifier">params</span>)
+      <span class="ruby-node">&quot;#{api_url}#{api_method}.#{api_format}?apikey=#{api_key}#{hash2get(params)}&quot;</span>
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
+
+        <div class="method-heading">
+          <a href="#M000009" class="method-signature">
           <span class="method-name">get_json_data</span><span class="method-args">(url)</span>
           </a>
         </div>
@@ -163,30 +284,55 @@ Usage:
   District.get_json_data(&quot;http://someurl.com&quot;)    # returns Hash of data or nil
 </pre>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000003-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000003-source">
+            onclick="toggleCode('M000009-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000009-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sunlight.rb, line 42</span>
+<span class="ruby-comment cmt"># File lib/sunlight/sunlight_object.rb, line 51</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_json_data</span>(<span class="ruby-identifier">url</span>)
-      
       <span class="ruby-identifier">response</span> = <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTP</span>.<span class="ruby-identifier">get_response</span>(<span class="ruby-constant">URI</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">url</span>))
       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">response</span>.<span class="ruby-identifier">class</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Net</span><span class="ruby-operator">::</span><span class="ruby-constant">HTTPOK</span>
         <span class="ruby-identifier">result</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">response</span>.<span class="ruby-identifier">body</span>)
       <span class="ruby-keyword kw">else</span>
         <span class="ruby-keyword kw">nil</span>
       <span class="ruby-keyword kw">end</span>
-      
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000002" class="method-detail">
-        <a name="M000002"></a>
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
 
         <div class="method-heading">
-          <a href="#M000002" class="method-signature">
+          <a href="#M000005" class="method-signature">
+          <span class="method-name">get_key</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000005-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000005-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/sunlight/sunlight_object.rb, line 20</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">get_key</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span> <span class="ruby-operator">==</span> <span class="ruby-constant">Sunlight</span><span class="ruby-operator">::</span><span class="ruby-constant">SunlightObject</span>
+        <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>( <span class="ruby-node">&quot;#{app_root}/config/sunlight.api&quot;</span> )
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-constant">Sunlight</span><span class="ruby-operator">::</span><span class="ruby-constant">SunlightObject</span>.<span class="ruby-identifier">api_key</span>
+      <span class="ruby-keyword kw">end</span>  
+    <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+          <a href="#M000008" class="method-signature">
           <span class="method-name">hash2get</span><span class="method-args">(h)</span>
           </a>
         </div>
@@ -196,20 +342,16 @@ Usage:
 Converts a hash to a GET string
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000002-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000002-source">
+            onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000008-source">
 <pre>
-<span class="ruby-comment cmt"># File lib/sunlight.rb, line 25</span>
+<span class="ruby-comment cmt"># File lib/sunlight/sunlight_object.rb, line 38</span>
     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">hash2get</span>(<span class="ruby-identifier">h</span>)
-      
       <span class="ruby-identifier">get_string</span> = <span class="ruby-value str">&quot;&quot;</span>
-      
       <span class="ruby-identifier">h</span>.<span class="ruby-identifier">each_pair</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span>
         <span class="ruby-identifier">get_string</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;&amp;#{key.to_s}=#{CGI::escape(value.to_s)}&quot;</span>
       <span class="ruby-keyword kw">end</span>
-      
       <span class="ruby-identifier">get_string</span>
-      
     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>

@@ -56,7 +56,7 @@
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Wed Aug 20 14:25:25 -0400 2008</td>
+      <td>Wed Jan 28 20:19:15 -0800 2009</td>
     </tr>
     </table>
   </div>
@@ -73,12 +73,19 @@
 h1. <a href="../classes/Sunlight.html">Sunlight</a> Labs API Gem
 </p>
 <p>
+NOTE: This file is formatted in Textile and best viewed on
+&quot;GitHub&quot;:<a
+href="http://github.com/rughetto/sunlight">github.com/rughetto/sunlight</a>.
+</p>
+<p>
 h2. Description
 </p>
 <p>
 A little gem that integrates with the <a
-href="../classes/Sunlight.html">Sunlight</a> Labs API. From the
-&quot;official site&quot;:<a
+href="../classes/Sunlight.html">Sunlight</a> Labs API, originally build by
+&quot;luigi&quot;:<a href="http://github.com/luigi">github.com/luigi</a>.
+From the &quot;official <a href="../classes/Sunlight.html">Sunlight</a>
+site&quot;:<a
 href="http://services.sunlightlabs.com/api">services.sunlightlabs.com/api</a>/:
 </p>
 <p>
@@ -94,15 +101,27 @@ Full API documentation available &quot;here&quot;:<a
 href="http://services.sunlightlabs.com/api/docs">services.sunlightlabs.com/api/docs</a>/.
 </p>
 <p>
-Optionally, the <a href="../classes/Sunlight.html">Sunlight</a> gem
-integrates with the Google Maps API for &quot;street address
-geocoding&quot;:<a
+Also, the <a href="../classes/Sunlight.html">Sunlight</a> gem integrates
+with the Google Maps API for &quot;street address geocoding&quot;:<a
 href="http://code.google.com/apis/maps/documentation/services.html#Geocoding">code.google.com/apis/maps/documentation/services.html#Geocoding</a>.
 Because some zip codes overlap two or more congressional districts, passing
 in a latitude/longitude will give users the most accurate information.
-Since it&#8216;s highly unlikely a user would know their exact lat/lng, the
-Google Maps API is used to translate a street address string into a lat/lng
-pair.
+Since it&#8216;s highly unlikely a user would know their exact lat/long,
+the Google Maps API is used to translate a street address string into a
+lat/long pair.
+</p>
+<p>
+This version of the library has been grabbed nearly verbatim from
+&quot;github.com/luigi/sunlight&quot;:<a
+href="http://github.com/luigi/sunlight">github.com/luigi/sunlight</a>.
+Changes were made to make this work more reliably in Merb. In particular
+the base class SunlightObject was changed to include methods for the
+constants and accessors originally held in the <a
+href="../classes/Sunlight.html">Sunlight</a> module. Now instead of
+including the module in another class, you can call the <a
+href="../classes/Sunlight/Legislator.html">Sunlight::Legislator</a> and <a
+href="../classes/Sunlight/District.html">Sunlight::District</a> objects
+directly.
 </p>
 <p>
 h2. Installation
@@ -122,17 +141,165 @@ The following gems are required:
 @$ sudo gem install json ym4r@
 </p>
 <p>
-Then, install the <a href="../classes/Sunlight.html">Sunlight</a> gem:
+The latest development version can be installed using:
 </p>
 <p>
-@$ sudo gem install luigi-sunlight &#8212;source=http://gems.github.com@
+@$ sudo gem install rughetto-sunlight &#8212;source=http://gems.github.com@
+</p>
+<p>
+To install the stable gem, go to &quot;github.com/luigi/sunlight&quot;:<a
+href="http://github.com/luigi/sunlight">github.com/luigi/sunlight</a>.
+</p>
+<p>
+h2. Set Up
+</p>
+<p>
+First, register for an API key &quot;here&quot;:<a
+href="http://services.sunlightlabs.com/api/register">services.sunlightlabs.com/api/register</a>/.
+</p>
+<p>
+Then, you&#8216;ll want to stick the following lines somewhere in your Ruby
+environment.
+</p>
+<p>
+&lt;pre&gt;&lt;code&gt;
+</p>
+<pre>
+  require 'rubygems'
+  require 'sunlight'
+  Sunlight::SunlightObject.api_key = 'yourapikeyfromtheurlabove'
+  # or it will read a file in your config directory called sunlight.api
+  # each object can be initialized to a different key by calling the object's class method #api_key=
+</pre>
+<p>
+&lt;/code&gt;&lt;/pre&gt;
+</p>
+<p>
+This library has been changed to use either Rails or Merb. For Rails, add
+the gem requirement in your particular environment file, and the <a
+href="../classes/Sunlight/Legislator.html">Sunlight::Legislator</a> and <a
+href="../classes/Sunlight/District.html">Sunlight::District</a> classes
+will be available throughout the application.
+</p>
+<p>
+If using merb, add the dependency requirement to your dependency.rb file:
+&lt;pre&gt;&lt;code&gt;
+</p>
+<pre>
+  dependency &quot;rughetto-sunlight&quot;,    :require_as =&gt; &quot;sunlight&quot;
+</pre>
+<p>
+&lt;/code&gt;&lt;/pre&gt; The gem will be automatically packaged into your
+application when thor merb:gem:install in run next.
 </p>
 <p>
 h2. Usage
 </p>
 <p>
-First, register for an API key &quot;here&quot;:<a
-href="http://services.sunlightlabs.com/api/register">services.sunlightlabs.com/api/register</a>/.
+Now, it&#8216;s time to get to the good stuff. The most useful method is
+@Legislator#all_for@:
+</p>
+<p>
+&lt;pre&gt;&lt;code&gt;
+</p>
+<pre>
+  congresspeople = Legislator.all_for(:address =&gt; &quot;123 Fifth Ave New York, NY 10003&quot;)
+  senior_senator = congresspeople[:senior_senator]
+  junior_senator = congresspeople[:junior_senator]
+  representative = congresspeople[:representative]
+
+  junior_senator.firstname          # returns &quot;Hillary&quot;
+  junior_senator.lastname           # returns &quot;Clinton&quot;
+  junior_senator.congress_office    # returns &quot;476 Russell Senate Office Building&quot;
+  junior_senator.phone              # returns &quot;202-224-4451&quot;
+</pre>
+<p>
+&lt;/code&gt;&lt;/pre&gt;
+</p>
+<p>
+Note that you should make the best attempt to get a full street address, as
+that is geocoded behind the scenes into a lat/long pair. A five-digit zip
+code alone won&#8216;t cut it, as there may be multiple congressional
+districts in a single zip code (there are ways to deal with this below). If
+you pass in a zip+4, then you&#8216;ll get much better geocoding results.
+</p>
+<p>
+So @Legislator#all_for@ returns a hash of @Legislator@ objects, and the
+keys are @:senior_senator@, @:junior_senator@, and @:representative@. Make
+sure to review all the available fields from the &quot;<a
+href="../classes/Sunlight.html">Sunlight</a> Labs API&quot;:<a
+href="http://services.sunlightlabs.com/api/docs/legislators">services.sunlightlabs.com/api/docs/legislators</a>/.
+You can also pass in a lat/long pair:
+</p>
+<p>
+&lt;pre&gt;&lt;code&gt;
+</p>
+<pre>
+  congresspeople = Legislator.all_for(:latitude =&gt; 33.876145, :longitude =&gt; -84.453789)
+</pre>
+<p>
+&lt;/code&gt;&lt;/pre&gt;
+</p>
+<p>
+This bypasses the geocoding necessary by the Google Maps API. For social
+networks and other applications with a User object, it makes sense to
+geocode the user&#8216;s address up front and save the lat/long data in the
+local database. Then, use the lat/long pair instead of address, which cuts
+a substantial bit of time from the @Legislator#all_for@ request since the
+Google Maps API Geocoding function doesn&#8216;t have to be called.
+</p>
+<p>
+You can also use the @Legislator#all_where@ method for searching based on
+available fields. You&#8216;ll get back an array of @Legislator@ objects:
+</p>
+<p>
+&lt;pre&gt;&lt;code&gt;
+</p>
+<pre>
+  johns = Legislator.all_where(:firstname =&gt; &quot;John&quot;)
+  floridians = Legislator.all_where(:state =&gt; &quot;FL&quot;)
+  dudes = Legislator.all_where(:gender =&gt; &quot;M&quot;)
+
+  johns.each do |john|
+    # do stuff
+  end
+</pre>
+<p>
+&lt;/code&gt;&lt;/pre&gt;
+</p>
+<p>
+There&#8216;s also the @District@ object. @District#get@ takes in either
+lat/long or an address and does it&#8216;s best to return the correct
+Congressional District:
+</p>
+<p>
+&lt;pre&gt;&lt;code&gt;
+</p>
+<pre>
+  district = District.get(:latitude =&gt; 33.876145, :longitude =&gt; -84.453789)
+  district.state            # returns &quot;GA&quot;
+  district.number           # returns &quot;6&quot;
+
+  district = District.get(:address =&gt; &quot;123 Fifth Ave New York, NY&quot;)
+</pre>
+<p>
+&lt;/code&gt;&lt;/pre&gt;
+</p>
+<p>
+Finally, two more methods, @District.all_from_zipcode@ and
+@District.zipcodes_in@, help you out when all you have is a five-digit zip
+code and want to make sure you account for all the districts in a zip code,
+or if you want to get back all zipcodes in a given district.
+</p>
+<p>
+&lt;pre&gt;&lt;code&gt;
+</p>
+<pre>
+  districts = District.all_from_zipcode(90210)    # returns array of District objects
+  zipcodes = District.zipcodes_in(&quot;NY&quot;, &quot;10&quot;)     # returns array of zip codes as strings  [&quot;11201&quot;, &quot;11202&quot;, &quot;11203&quot;,...]
+</pre>
+<p>
+&lt;/code&gt;&lt;/pre&gt;
 </p>
 <p>
 h2. License
@@ -145,7 +312,7 @@ and the &quot;Google Maps API&quot;:<a
 href="http://code.google.com/apis/maps/terms.html">code.google.com/apis/maps/terms.html</a>.
 </p>
 <p>
-Copyright &amp;copy; 2008 by Luigi Montanez under the MIT License.
+Copyright &amp;copy; 2008 by Rue the Ghetto under the MIT License.
 </p>
 <p>
 Permission is hereby granted, free of charge, to any person obtaining a

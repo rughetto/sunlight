@@ -1,10 +1,10 @@
 h1. Sunlight Labs API Gem
 
-NOTE: This file is formatted in Textile and best viewed on "GitHub":http://github.com/luigi/sunlight.
+NOTE: This file is formatted in Textile and best viewed on "GitHub":http://github.com/rughetto/sunlight.
 
 h2. Description
 
-A little gem that integrates with the Sunlight Labs API. From the "official site":http://services.sunlightlabs.com/api/:
+A little gem that integrates with the Sunlight Labs API, originally build by "luigi":http://github.com/luigi. From the "official Sunlight site":http://services.sunlightlabs.com/api/:
 
 bq. The Sunlight Labs API provides methods for obtaining basic information on Members of Congress, legislator IDs used by various websites, and lookups between places and the politicians that represent them. The primary purpose of the API is to facilitate mashups involving politicians and the various other APIs that are out there.
 
@@ -12,6 +12,7 @@ Full API documentation available "here":http://services.sunlightlabs.com/api/doc
 
 Also, the Sunlight gem integrates with the Google Maps API for "street address geocoding":http://code.google.com/apis/maps/documentation/services.html#Geocoding. Because some zip codes overlap two or more congressional districts, passing in a latitude/longitude will give users the most accurate information. Since it's highly unlikely a user would know their exact lat/long, the Google Maps API is used to translate a street address string into a lat/long pair.
 
+This version of the library has been grabbed nearly verbatim from "github.com/luigi/sunlight":http://github.com/luigi/sunlight. Changes were made to make this work more reliably in Merb. In particular the base class SunlightObject was changed to include methods for the constants and accessors originally held in the Sunlight module. Now instead of including the module in another class, you can call the Sunlight::Legislator and Sunlight::District objects directly.
 
 h2. Installation
 
@@ -22,15 +23,11 @@ The following gems are required:
 
 @$ sudo gem install json ym4r@
 
-Then, install the stable Sunlight gem:
+The latest development version can be installed using:
 
-@$ sudo gem install sunlight@
+@$ sudo gem install rughetto-sunlight --source=http://gems.github.com@
 
-Or, if you're adventurous, the latest dev version (which should be quite stable):
-
-@$ sudo gem install luigi-sunlight --source=http://gems.github.com@
-
-
+To install the stable gem, go to "github.com/luigi/sunlight":http://github.com/luigi/sunlight.
 
 h2. Set Up
 
@@ -41,11 +38,18 @@ Then, you'll want to stick the following lines somewhere in your Ruby environmen
 <pre><code>
   require 'rubygems'
   require 'sunlight'
-  include Sunlight
-  Sunlight.api_key = 'yourapikeyfromtheurlabove'
+  Sunlight::SunlightObject.api_key = 'yourapikeyfromtheurlabove' 
+  # or it will read a file in your config directory called sunlight.api
+  # each object can be initialized to a different key by calling the object's class method #api_key=
 </code></pre>
 
-If you're testing this out in IRB, you'll run them one at a time. If you're using Rails 2.1, stick them in a file called @sunlight.rb@ in @RAILS_ROOT/config/initializers@. They'll load on app startup.
+This library has been changed to use either Rails or Merb. For Rails, add the gem requirement in your particular environment file, and the Sunlight::Legislator and Sunlight::District classes will be available throughout the application. 
+
+If using merb, add the dependency requirement to your dependency.rb file:
+<pre><code>
+  dependency "rughetto-sunlight",    :require_as => "sunlight"
+</code></pre>
+The gem will be automatically packaged into your application when thor merb:gem:install in run next.
 
 h2. Usage
 
@@ -107,7 +111,7 @@ h2. License
 
 See the terms of usage for the "Sunlight Labs API":http://services.sunlightlabs.com/api/ and the "Google Maps API":http://code.google.com/apis/maps/terms.html.
 
-Copyright &copy; 2008 by Luigi Montanez under the MIT License.
+Copyright &copy; 2008 by Rue the Ghetto under the MIT License.
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation

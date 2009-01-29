@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+# This script was inspired by one written by Erik Kastner, 
+# and a blog describing it's needs and usage can be found at 
+# http://metaatem.net/2007/04/20/fun-with-active_record-and-sqlite3
+# 
+# It can be used for hands on quick and dirty testing to see how the library 
+# is working in the IRB console. 
+
+require 'rubygems'
+require 'irb'
+require File.dirname(__FILE__) + '/../lib/sunlight'
+
+
+# start the conole with these variables
+IRB.start if __FILE__ == $0

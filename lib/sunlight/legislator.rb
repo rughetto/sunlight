@@ -1,8 +1,6 @@
 module Sunlight
-
   class Legislator < SunlightObject
     
-
     attr_accessor :title, :firstname, :middlename, :lastname, :name_suffix, :nickname,
                   :party, :state, :district, :gender, :phone, :fax, :website, :webform,
                   :email, :congress_office, :bioguide_id, :votesmart_id, :fec_id,
