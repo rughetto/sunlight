@@ -3,3 +3,4 @@ coverage
 setup.rb
 config/*
 spec/config/*
+*.api
