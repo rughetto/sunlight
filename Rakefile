@@ -3,7 +3,7 @@ require 'rake'
 require 'rake/rdoctask'
 require 'spec/rake/spectask'
 
-Version = '0.1.1'
+Version = '0.1.3'
 
 Spec::Rake::SpecTask.new("spec") do |t|
   t.spec_files = FileList['spec/**/*_spec.rb']

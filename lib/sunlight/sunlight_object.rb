@@ -1,6 +1,27 @@
 module Sunlight
   # Houses general methods to work with the Sunlight and Google Maps APIs
   class SunlightObject
+    
+    #
+    # Takes in a hash where the keys are strings (the format passed in by the JSON parser)
+    # if the class does not already have a attr_accessor one is created in the class
+    def initialize(params={})
+      params.each do |key, value|   
+        unless self.class.instance_methods.include?(key) 
+          add_accessor( key )
+        end
+        instance_variable_set("@#{key}", value) 
+      end
+    end
+    
+    private 
+      def add_accessor( key )
+        self.class.class_eval do 
+          attr_accessor key.to_sym
+        end
+      end
+    public  
+    
     def self.api_url 
       "http://services.sunlightlabs.com/api/"
     end
